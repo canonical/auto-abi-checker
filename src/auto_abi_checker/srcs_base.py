@@ -15,10 +15,10 @@ class SrcBase:
         self.ws = mkdtemp()
         self.ws_files = join(self.ws, 'files')
         self.compilation_flags = []
-        main_step_info("Init " + self.name + " -::- " + "workspace: " + self.ws)
+        main_step_info(f'Init {self.name} -::- workspace: {self.ws}')
 
     def __str__(self):
-        return "'" + self.name + "' at " + str(self.ws)
+        return f"'{self.name}' at {self.ws}"
 
     def list_files(self, pattern):
         return glob(self.ws + '/' + pattern)

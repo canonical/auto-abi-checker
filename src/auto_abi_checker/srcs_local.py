@@ -13,7 +13,7 @@ from auto_abi_checker.ros_utils import clean_non_default_dss_files
 
 class SrcLocalDir(SrcBase):
     def __init__(self, name):
-        SrcBase.__init__(self, name)
+        super().__init__(name)
 
     def validate(self, directory):
         if (not path.isdir(directory)):
@@ -36,7 +36,7 @@ class SrcLocalDir(SrcBase):
 
 class SrcROSWs(SrcLocalDir):
     def __init__(self, name):
-        SrcLocalDir.__init__(self, name)
+        super().__init__(name)
 
     def filter_files(self):
         clean_non_default_dss_files(self.ws_files)

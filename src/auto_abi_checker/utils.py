@@ -8,15 +8,15 @@ from sys import stderr
 
 
 def main_step_info(msg):
-    print("* %s" % msg)
+    print(f"* {msg}")
 
 
 def info(msg):
-    print(" - %s" % msg)
+    print(f" - {msg}")
 
 
 def subinfo(msg):
-    print("   - %s" % msg)
+    print(f"   - {msg}")
 
 
 def _check_call(cmd):

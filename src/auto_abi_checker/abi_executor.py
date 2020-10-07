@@ -72,7 +72,7 @@ class ABIExecutor():
                '--gcc-path', self.compiler,
                '-dump', src_class.ws_files,
                '-gcc-options', self.compilation_flags]
-        print(" - Run '%s'" % ' '.join(cmd))
+        print(f" - Run '{' '.join(cmd)}'")
         try:
             subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:

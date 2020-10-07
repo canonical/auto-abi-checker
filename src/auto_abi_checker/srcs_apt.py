@@ -10,7 +10,7 @@ from auto_abi_checker.srcs_base import SrcBase
 
 class SrcAptBase(SrcBase):
     def __init__(self, name):
-        SrcBase.__init__(self, name)
+        super().__init__(name)
 
     def run(self, value):
         self.validate(value)
@@ -21,7 +21,7 @@ class SrcAptBase(SrcBase):
 
     # override if need validation
     def validate(self, value):
-        True
+        return True
 
     def get_deb_package_names(self, value):
         raise NotImplementedError()
@@ -50,7 +50,7 @@ class SrcAptBase(SrcBase):
 
 class SrcOSRFPkgGenerator(SrcAptBase):
     def __init__(self, name):
-        SrcAptBase.__init__(self, name)
+        super().__init__(name)
         self.osrf_url_base = 'http://bitbucket.org/osrf/'
         self.compilation_flags.append('--std=c++17')
 

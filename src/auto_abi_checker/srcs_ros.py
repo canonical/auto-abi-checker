@@ -15,7 +15,7 @@ from auto_abi_checker.ros_utils import clean_non_default_dss_files
 
 class SrcROSBase(SrcAptBase):
     def __init__(self, name, ros_distro):
-        SrcAptBase.__init__(self, name)
+        super().__init__(name)
         self.ros_distro = self.detect_ros_distribution(ros_distro)
         self.rosdistro_index = rosdistro.get_index(rosdistro.get_index_url())
         self.cache = rosdistro.get_distribution_cache(self.rosdistro_index,
@@ -56,12 +56,10 @@ class SrcROSBase(SrcAptBase):
             error("ROS_DISTRO environment variable not found")
 
     def get_debian_package_name_prefix(self):
-        return 'ros-%s-' % self.ros_distro
+        return f'ros-{self.ros_distro}-'
 
     def get_debian_ros_package_name(self, ros_package_name):
-        return '%s%s' % \
-            (self.get_debian_package_name_prefix(),
-             ros_package_name.replace('_', '-'))
+        return f'{self.get_debian_package_name_prefix()}{ros_package_name.replace("_", "-")}'
 
     def filter_files(self):
         clean_non_default_dss_files(self.ws_files)
@@ -69,7 +67,7 @@ class SrcROSBase(SrcAptBase):
 
 class SrcROSRepoGenerator(SrcROSBase):
     def __init__(self, name, ros_distro=''):
-        SrcROSBase.__init__(self, name, ros_distro)
+        super().__init__(name, ros_distro)
 
     def validate_repo(self, ros_repo):
         keys = self.distro_file.repositories.keys()
@@ -95,7 +93,7 @@ class SrcROSRepoGenerator(SrcROSBase):
 
 class SrcROSPkgGenerator(SrcROSBase):
     def __init__(self, name, ros_distro=''):
-        SrcROSBase.__init__(self, name, ros_distro)
+        super().__init__(name, ros_distro)
         self.ros_deb_packages = []
 
     def is_debian_package(self, pkg):
