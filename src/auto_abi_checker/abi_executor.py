@@ -4,7 +4,7 @@
 # Licensed under the Apache License, Version 2.0
 
 import subprocess
-from tempfile import mkdtemp
+from tempfile import TemporaryDirectory
 from os import chdir, makedirs, environ
 from os.path import join, isdir, exists, realpath, dirname
 from auto_abi_checker.utils import _check_call, error, info, subinfo, main_step_info
@@ -13,7 +13,7 @@ from auto_abi_checker.utils import _check_call, error, info, subinfo, main_step_
 class ABIExecutor():
     def __init__(self, tolerance_levels='0', compilation_flags=''):
         self.bin = 'abi-compliance-checker'
-        self.ws = mkdtemp()
+        self._ws = TemporaryDirectory()
         self.ws_abi_dump = join(self.ws, 'abi_dumps')
         self.ws_report = join(self.ws, 'compat_reports', 'X_to_X')
         self.compiler = realpath('/usr/bin/cc')
@@ -156,3 +156,7 @@ class ABIExecutor():
         report_file = open(self.get_compat_report_file(), "w")
         report_file.write(html_str)
         report_file.close()
+
+    @property
+    def ws(self) -> str:
+        return self._ws.name
